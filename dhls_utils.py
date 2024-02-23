@@ -3,6 +3,7 @@ from networkx import (
     MultiDiGraph,
     DiGraph,
     simple_cycles,
+    nx_agraph,
 )
 
 
@@ -10,11 +11,11 @@ class CFG(DiGraph):
     pass
 
 
-class MG(MultiDiGraph):
-    pass
-
-
 class DFG(MultiDiGraph):
+
+    def to_dot(self, name: str = "test.dot"):
+        nx_agraph.to_agraph(self).write(f"./{name}")
+
     def get_latency(self, node: str) -> int:
         return int(self.nodes[node].get("latency", 0))
 
@@ -60,14 +61,15 @@ class DFG(MultiDiGraph):
     def get_cfg_edges(self) -> list:
         set_of_cfg_edges = set()
         for branch, v in self.edges():
-            if not self.nodes[branch]["type"] == "Branch":
-                continue
             # get the original edge
             _, next_, _ = self.get_original_edge((branch, v))
             bb_prev = int(self.nodes[branch]["bbID"])
             bb_next = int(self.nodes[next_]["bbID"])
-            if not (bb_prev == 0 or bb_next == 0):
-                set_of_cfg_edges.add((bb_prev, bb_next))
+            # bbID=0 indicates that the unit is either a source or a memory
+            # controller
+            if self.nodes[branch]["type"] == "Branch" or bb_prev != bb_next:
+                if not (bb_prev == 0 or bb_next == 0):
+                    set_of_cfg_edges.add((bb_prev, bb_next))
         return set_of_cfg_edges
 
     """
@@ -79,7 +81,9 @@ class DFG(MultiDiGraph):
         cfg = DiGraph()
         cfg.add_edges_from(self.get_cfg_edges())
         cfdfcs = []
+
         for bbcycle in simple_cycles(cfg):
+            print(bbcycle)
             cycle_edges = list(
                 zip(
                     (bbcycle + [bbcycle[0]])[0:-1], (bbcycle + [bbcycle[0]])[1:]
@@ -119,3 +123,7 @@ class DFG(MultiDiGraph):
             cfdfcs.append(cfc)
 
         return cfdfcs
+
+
+class MG(DFG):
+    pass
