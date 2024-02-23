@@ -83,7 +83,6 @@ class DFG(MultiDiGraph):
         cfdfcs = []
 
         for bbcycle in simple_cycles(cfg):
-            print(bbcycle)
             cycle_edges = list(
                 zip(
                     (bbcycle + [bbcycle[0]])[0:-1], (bbcycle + [bbcycle[0]])[1:]
