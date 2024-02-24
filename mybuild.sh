@@ -12,18 +12,22 @@ POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
 
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
+
+CMAKE_FLAGS_SUPER="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+	-DLLVM_ENABLE_LLD=ON"
+
 [ -d /opt/gurobi1000 ] && {
 	export GUROBI_HOME="/opt/gurobi1000/linux64"
 	export PATH="${PATH}:${GUROBI_HOME}/bin"
 	export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 }
 
-CMAKE_FLAGS_SUPER="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
-	-DLLVM_ENABLE_LLD=ON"
 
-which cmake3 && CMAKE=cmake3 || CMAKE=cmake
-
-[ "$HOST" == 'ee-tik-eda2' ] && CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
+[ "$HOST" == 'ee-tik-eda2' ] && {
+	CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
+	source /opt/rh/devtoolset-11/enable
+	source /opt/rh/llvm-toolset-7.0/enable
+}
 
 #---------------------
 #- Wrapper functions -
