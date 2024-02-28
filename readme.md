@@ -2,9 +2,6 @@
 
 ## Prerequisite: get your Gurobi license
 
-You need to download [gurobi optimizer for x64
-Linux](https://www.gurobi.com/downloads/gurobi-software/).
-
 Gurobi offers free [academic
 license](https://www.gurobi.com/academia/academic-program-and-licenses/).
 
