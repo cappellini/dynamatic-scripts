@@ -23,7 +23,7 @@ CMAKE_FLAGS_SUPER="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
 }
 
 
-[ "$HOST" == 'ee-tik-eda2' ] && {
+[ "$HOSTNAME" = 'ee-tik-eda2' ] && {
 	CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
 	source /opt/rh/devtoolset-11/enable
 	source /opt/rh/llvm-toolset-7.0/enable
