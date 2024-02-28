@@ -24,7 +24,7 @@ class DFG(MultiDiGraph):
     predecessor and successor in the non-buffered circuit
     """
 
-    def get_original_edge(self, edge: tuple) -> (str, str, dict):
+    def get_original_edge(self, edge: tuple) -> (str, str, dict): # type: ignore
         if edge not in self.edges:
             raise ValueError
 
@@ -58,7 +58,7 @@ class DFG(MultiDiGraph):
             succ = out_edges[0][1]
         return (pred, succ, {"from": from_, "to": "to_"})
 
-    def get_cfg_edges(self) -> list:
+    def get_cfg_edges(self) -> set:
         set_of_cfg_edges = set()
         for branch, v in self.edges():
             # get the original edge
