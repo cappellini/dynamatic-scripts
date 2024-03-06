@@ -7,14 +7,13 @@
 # this script should be called from dynamatic's source directory
 SCRIPT_CWD=$PWD
 
-CIRCT_DIR_PREFIX="$SCRIPT_CWD/circt"
-POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
-
-LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
-
-
 CMAKE_FLAGS_SUPER="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
 	-DLLVM_ENABLE_LLD=ON"
+
+CMAKE=cmake
+POLYGEIST_DIR_PREFIX='/opt/polygeist'
+LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
+
 
 [ -d /opt/gurobi1000 ] && {
 	export GUROBI_HOME="/opt/gurobi1000/linux64"
@@ -22,8 +21,9 @@ CMAKE_FLAGS_SUPER="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
 	export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 }
 
-
-[ "$HOSTNAME" = 'ee-tik-eda2' ] && {
+# here are some settings for our centos server (identified by the hostname)
+[ "$(hostname)" = 'ee-tik-eda2' ] && {
+  POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
 	CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
 	source /opt/rh/devtoolset-11/enable
 	source /opt/rh/llvm-toolset-7.0/enable
