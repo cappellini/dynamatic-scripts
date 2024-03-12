@@ -12,7 +12,6 @@ CMAKE_FLAGS_SUPER="-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
 
 CMAKE=cmake
 POLYGEIST_DIR_PREFIX='/opt/polygeist'
-LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
 
 [ -d /opt/gurobi1000 ] && {
@@ -23,11 +22,13 @@ LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
 # here are some settings for our centos server (identified by the hostname)
 [ "$(hostname)" = 'ee-tik-eda2' ] && {
-  POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
-	CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
-	source /opt/rh/devtoolset-11/enable
-	source /opt/rh/llvm-toolset-7.0/enable
+POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
+CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
+source /opt/rh/devtoolset-11/enable
+source /opt/rh/llvm-toolset-7.0/enable
 }
+
+LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
 #---------------------
 #- Wrapper functions -
