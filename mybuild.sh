@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
 #----------------------------------------------------------------------------
-#- This script fetch the circt from remote, and compile circt and dynamatic
+#- This script compiles dynamatic; the Polygeist is assumed to be pre-built
+#-   and located in /opt/polygeist
 #----------------------------------------------------------------------------
 
 # this script should be called from dynamatic's source directory
-SCRIPT_CWD=$PWD
+SCRIPT_CWD="$PWD"
 
 CMAKE=cmake
-POLYGEIST_DIR_PREFIX='/opt/polygeist'
+POLYGEIST_DIR_PREFIX="/opt/polygeist"
 
 LSQ_GEN_PATH="tools/backend/lsq-generator"
 LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
@@ -21,10 +22,10 @@ LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
 
 # here are some settings for our centos server (identified by the hostname)
 [ "$(hostname)" = 'ee-tik-eda2' ] && {
-POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
-CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
-source /opt/rh/devtoolset-11/enable
-source /opt/rh/llvm-toolset-7.0/enable
+  POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
+  CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
+  source /opt/rh/devtoolset-11/enable
+  source /opt/rh/llvm-toolset-7.0/enable
 }
 
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
@@ -32,17 +33,13 @@ LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 C_COMPILER="$LLVM_PREFIX/build/bin/clang"
 CXX_COMPILER="$LLVM_PREFIX/build/bin/clang++"
 
-
 CMAKE_FLAGS_SUPER="\
   -DCMAKE_C_COMPILER=$C_COMPILER \
   -DCMAKE_CXX_COMPILER=$CXX_COMPILER \
   -DLLVM_ENABLE_LLD=ON \
   "
 
-#---------------------
-#- Wrapper functions -
-#---------------------
-
+# Run CMAKE for dynamatic
 build_dynamatic () {
   cd $SCRIPT_CWD && mkdir -p build && cd build
   $CMAKE -G Ninja .. \
@@ -60,7 +57,7 @@ build_dynamatic () {
 
 make_simlink () {
   # Create bin/ directory at the project's root
-  cd "$SCRIPT_CWD" && mkdir -p bin
+  cd "$SCRIPT_CWD" && mkdir -p bin bin/generators
 
   # Create symbolic links to all binaries we use from subfolders
   ln -f --symbolic $POLYGEIST_DIR_PREFIX/build/bin/cgeist ./bin/cgeist
@@ -90,8 +87,10 @@ make_simlink () {
   # Make the scripts used by the frontend executable
   chmod +x tools/dynamatic/scripts/*.sh
 
-  # Symlink polygeist
-  ln -s $POLYGEIST_DIR_PREFIX/llvm-project $SCRIPT_CWD/polygeist/llvm-project
+  # Symlink llvm-project if does not exist
+  [ ! -L $SCRIPT_CWD/polygeist/llvm-project ] && {
+    ln -s $POLYGEIST_DIR_PREFIX/llvm-project $SCRIPT_CWD/polygeist/llvm-project
+  }
 }
 
 
