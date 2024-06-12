@@ -1,12 +1,20 @@
-set-dynamatic-path  ./dynamatic
+#!/bin/bash
 
-set-src             ./dynamatic/integration-test/matvec/matvec.c
 
-compile
+benchmark=gsum
+echo "set-dynamatic-path ./dynamatic; \
+  set-src ./dynamatic/integration-test/$benchmark/$benchmark.c; \
+  compile --simple-buffers; \
+  write-hdl; \
+  exit" \
+  | dynamatic/bin/dynamatic --exit-on-failure
 
-write-hdl
+benchmark=fir
+echo "set-dynamatic-path ./dynamatic; \
+  set-src ./dynamatic/integration-test/$benchmark/$benchmark.c; \
+  compile --simple-buffers; \
+  write-hdl; \
+  exit" \
+  | dynamatic/bin/dynamatic --exit-on-failure
 
-simulate
-
-exit
 
