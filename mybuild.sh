@@ -21,10 +21,10 @@ LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
 
 # here are some settings for our centos server (identified by the hostname)
 [ "$(hostname)" = 'ee-tik-eda2' ] && {
-  POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
-  CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
-  source /opt/rh/devtoolset-11/enable
-  source /opt/rh/llvm-toolset-7.0/enable
+POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
+CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
+source /opt/rh/devtoolset-11/enable
+source /opt/rh/llvm-toolset-7.0/enable
 }
 
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
