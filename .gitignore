@@ -9,3 +9,4 @@ buffer-placement/
 sim/
 hdl/
 tags
+test-*.sh
