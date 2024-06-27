@@ -20,7 +20,10 @@ LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
   export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 }
 
-# here are some settings for our centos server (identified by the hostname)
+# ----------------------------------------------------------------------------------
+# - here are some settings for our centos/rocky servers (identified by the hostname)
+# ----------------------------------------------------------------------------------
+
 [ "$(hostname)" = 'ee-tik-eda2' ] && {
   POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
   CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
@@ -28,10 +31,18 @@ LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
   source /opt/rh/llvm-toolset-7.0/enable
 }
 
+[ "$(hostname)" = 'ee-tik-dynamo-eda1' ] && {
+  source /opt/rh/gcc-toolset-13/enable
+}
+
+# ----------------------------------------------------------------------------------
+# - Clang configs
+# ----------------------------------------------------------------------------------
+
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
-C_COMPILER="$LLVM_PREFIX/build/bin/clang"
-CXX_COMPILER="$LLVM_PREFIX/build/bin/clang++"
+C_COMPILER="clang"
+CXX_COMPILER="clang++"
 
 CMAKE_FLAGS_SUPER="\
   -DCMAKE_C_COMPILER=$C_COMPILER \
@@ -52,7 +63,7 @@ build_dynamatic () {
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
     $CMAKE_FLAGS_SUPER
 
-  ninja -j$(nproc)
+  time ninja -j$(nproc)
 }
 
 make_simlink () {
