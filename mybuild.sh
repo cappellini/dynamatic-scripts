@@ -22,13 +22,24 @@ LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
   export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
 }
 
-# here are some settings for our centos server (identified by the hostname)
+# ----------------------------------------------------------------------------------
+# - here are some settings for our centos/rocky servers (identified by the hostname)
+# ----------------------------------------------------------------------------------
+
 [ "$(hostname)" = 'ee-tik-eda2' ] && {
   POLYGEIST_DIR_PREFIX='/opt/polygeist-lap'
   CMAKE="/opt/"cmake-3.*.*-linux-x86_64"/bin/cmake"
   source /opt/rh/devtoolset-11/enable
   source /opt/rh/llvm-toolset-7.0/enable
 }
+
+[ "$(hostname)" = 'ee-tik-dynamo-eda1' ] && {
+  source /opt/rh/gcc-toolset-13/enable
+}
+
+# ----------------------------------------------------------------------------------
+# - Clang configs
+# ----------------------------------------------------------------------------------
 
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
