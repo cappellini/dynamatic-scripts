@@ -11,6 +11,8 @@ SCRIPT_CWD="$PWD"
 CMAKE=cmake
 POLYGEIST_DIR_PREFIX="/opt/polygeist"
 
+# export CCACHE_DISABLE=1
+
 LSQ_GEN_PATH="tools/backend/lsq-generator"
 LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
 
@@ -30,8 +32,8 @@ LSQ_GEN_JAR="target/scala-2.13/lsq-generator.jar"
 
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
-C_COMPILER="$LLVM_PREFIX/build/bin/clang"
-CXX_COMPILER="$LLVM_PREFIX/build/bin/clang++"
+C_COMPILER="clang"
+CXX_COMPILER="clang++"
 
 CMAKE_FLAGS_SUPER="\
   -DCMAKE_C_COMPILER=$C_COMPILER \
@@ -42,17 +44,17 @@ CMAKE_FLAGS_SUPER="\
 # Run CMAKE for dynamatic
 build_dynamatic () {
   cd $SCRIPT_CWD && mkdir -p build && cd build
+
   $CMAKE -G Ninja .. \
     -DMLIR_DIR=$LLVM_PREFIX/build/lib/cmake/mlir \
     -DLLVM_DIR=$LLVM_PREFIX/build/lib/cmake/llvm \
     -DCLANG_DIR=$LLVM_PREFIX/build/lib/cmake/clang \
     -DLLVM_TARGETS_TO_BUILD="host" \
     -DCMAKE_BUILD_TYPE=Debug \
-    -DLLVM_ENABLE_ASSERTIONS=ON \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
     $CMAKE_FLAGS_SUPER
 
-  ninja -j$(nproc)
+  ninja -j 32
 }
 
 make_simlink () {
@@ -65,22 +67,22 @@ make_simlink () {
   ln -f --symbolic $POLYGEIST_DIR_PREFIX/llvm-project/build/bin/clang++ ./bin/clang++
   ln -f --symbolic $POLYGEIST_DIR_PREFIX/llvm-project/build/bin/mlir-opt ./bin/mlir-opt
 
-
   ln -f --symbolic $SCRIPT_CWD/build/bin/dynamatic ./bin/dynamatic
   ln -f --symbolic $SCRIPT_CWD/build/bin/dynamatic-opt ./bin/dynamatic-opt
   ln -f --symbolic $SCRIPT_CWD/build/bin/exp-frequency-profiler ./bin/exp-frequency-profiler
-  ln -f --symbolic $SCRIPT_CWD/build/bin/exp-export-rtl ./bin/exp-export-rtl
+  ln -f --symbolic $SCRIPT_CWD/build/bin/export-rtl ./bin/export-rtl
   ln -f --symbolic $SCRIPT_CWD/build/bin/export-dot ./bin/export-dot
   ln -f --symbolic $SCRIPT_CWD/build/bin/export-vhdl ./bin/export-vhdl
   ln -f --symbolic $SCRIPT_CWD/build/bin/handshake-simulator ./bin/handshake-simulator
   ln -f --symbolic $SCRIPT_CWD/build/bin/hls-verifier ./bin/hls-verifier
 
+
+  ln -f --symbolic $SCRIPT_CWD/build/bin/rtl-constant-generator-verilog ./bin/generators/rtl-constant-generator-verilog
   ln -f --symbolic $SCRIPT_CWD/build/bin/rtl-cmpf-generator ./bin/generators/rtl-cmpf-generator
   ln -f --symbolic $SCRIPT_CWD/build/bin/rtl-cmpi-generator ./bin/generators/rtl-cmpi-generator
   ln -f --symbolic $SCRIPT_CWD/build/bin/rtl-text-generator ./bin/generators/rtl-text-generator
 
-
-  ln -f --symbolic "$SCRIPT_CWD/$LSQ_GEN_PATH/$LSQ_GEN_JAR"
+  ln -f --symbolic "$SCRIPT_CWD/$LSQ_GEN_PATH/$LSQ_GEN_JAR" ./bin/generators/lsq-generator.jar
 
   cd "$SCRIPT_CWD" && mkdir -p bin/generators
 
@@ -101,5 +103,5 @@ build_lsq() {
 }
 
 build_dynamatic
-build_lsq
+#build_lsq
 make_simlink
