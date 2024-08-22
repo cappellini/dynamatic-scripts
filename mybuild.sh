@@ -76,17 +76,15 @@ make_simlink () {
   ln -f --symbolic $POLYGEIST_DIR_PREFIX/build/bin/cgeist ./bin/cgeist
   ln -f --symbolic $POLYGEIST_DIR_PREFIX/build/bin/polygeist-opt ./bin/polygeist-opt
   ln -f --symbolic $POLYGEIST_DIR_PREFIX/llvm-project/build/bin/clang++ ./bin/clang++
-  ln -f --symbolic $POLYGEIST_DIR_PREFIX/llvm-project/build/bin/mlir-opt ./bin/mlir-opt
 
   ln -f --symbolic $SCRIPT_CWD/build/bin/dynamatic ./bin/dynamatic
   ln -f --symbolic $SCRIPT_CWD/build/bin/dynamatic-opt ./bin/dynamatic-opt
   ln -f --symbolic $SCRIPT_CWD/build/bin/exp-frequency-profiler ./bin/exp-frequency-profiler
-  ln -f --symbolic $SCRIPT_CWD/build/bin/export-rtl ./bin/export-rtl
   ln -f --symbolic $SCRIPT_CWD/build/bin/export-dot ./bin/export-dot
-  ln -f --symbolic $SCRIPT_CWD/build/bin/export-vhdl ./bin/export-vhdl
+  ln -f --symbolic $SCRIPT_CWD/build/bin/export-rtl ./bin/export-rtl
   ln -f --symbolic $SCRIPT_CWD/build/bin/handshake-simulator ./bin/handshake-simulator
   ln -f --symbolic $SCRIPT_CWD/build/bin/hls-verifier ./bin/hls-verifier
-
+  ln -f --symbolic $SCRIPT_CWD/build/bin/wlf2csv ./bin/wlf2csv
 
   ln -f --symbolic $SCRIPT_CWD/build/bin/rtl-constant-generator-verilog ./bin/generators/rtl-constant-generator-verilog
   ln -f --symbolic $SCRIPT_CWD/build/bin/rtl-cmpf-generator ./bin/generators/rtl-cmpf-generator
@@ -114,5 +112,5 @@ build_lsq() {
 }
 
 build_dynamatic
-#build_lsq
+build_lsq
 make_simlink
