@@ -4,7 +4,7 @@
 clock_period=4
 
 # Choose the target hdl to test (vhdl|verilog)
-hdl="vhdl"
+hdl="verilog"
 
 dynamatic_dir=./dynamatic
 
