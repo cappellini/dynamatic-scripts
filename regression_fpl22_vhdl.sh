@@ -16,9 +16,9 @@ do
   echo "set-dynamatic-path $dynamatic_dir; \
     set-src ${benchmark}; \
     set-clock-period ${clock_period}; \
-    compile --simple-buffers; \
+    compile; \
     write-hdl --hdl ${hdl}; \
     simulate; \
     # synthesize; \
     exit" | $dynamatic_dir/bin/dynamatic --exit-on-failure --debug
-done 2>&1 | tee regression_test_${clock_period}_${hdl}_simple.log
+done 2>&1 | tee regression_test_${clock_period}_${hdl}_fpl22.log
