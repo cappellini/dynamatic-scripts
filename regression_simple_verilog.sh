@@ -8,7 +8,7 @@ hdl="verilog"
 
 dynamatic_dir=./dynamatic
 
-cat filelist.lst | while read benchmark
+cat filelist_verilog.lst | while read benchmark
 do
   [ -f "$benchmark" ] || continue
   echo "[INFO] Launching Dynamatic on benchmark ${benchmark}..."
