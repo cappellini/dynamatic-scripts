@@ -53,7 +53,8 @@ def list_transp_buffers(dynamatic_path, kernel_name) -> list:
                 r"\%(\d+) = tehb \[(\d+)\] (\S+).*handshake.name = \"(\w+)\"",
                 line,
             )
-            if m:
+            # Only remove transparent buffers for throughput.
+            if m and int(m.group(2)) > 2:
                 transp_buffers.append(m.group(4))
     return transp_buffers
 
@@ -182,3 +183,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
