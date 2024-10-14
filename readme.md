@@ -24,15 +24,10 @@ export PATH="${PATH}:${GUROBI_HOME}/bin"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$GUROBI_HOME/lib"
 ```
 
-## Build dynamatic on the EDA2 machine
+## Clone and build dynamatic on the EDA2 machine
 
 ```sh
-bash fetch.sh
-```
-
-## Build dynamatic
-
-```sh
+git clone git@github.com:EPFL-LAP/dynamatic.git
 cd dynamatic/
 bash ../mybuild.sh
 ``` 
