@@ -47,3 +47,24 @@ set-src ./dynamatic/integration-test/fir/fir.c
 ```
 
 In the `./dynamatic/integration-test/`, add your new benchmark
+
+## Trouble-shooting
+
+Error when running simulation: 
+```
+dynamatic/include/dynamatic/Integration.h:214:34: error: no member named 'setfill' in namespace 'std'
+  214 |   os << "0x" << std::hex << std::setfill('0') << std::setw(8)
+```
+
+Change `simulate.sh` as the following: 
+```diff
++++ b/tools/dynamatic/scripts/simulate.sh
+@@ -24,7 +24,7 @@ IO_GEN_BIN="$SIM_DIR/C_SRC/$KERNEL_NAME-io-gen"
+
+ # Shortcuts
+ HDL_DIR="$OUTPUT_DIR/hdl"
+-CLANGXX_BIN="$DYNAMATIC_DIR/bin/clang++"
++CLANGXX_BIN="clang++"
+ HLS_VERIFIER_BIN="$DYNAMATIC_DIR/bin/hls-verifier"
+ RESOURCE_DIR="$DYNAMATIC_DIR/tools/hls-verifier/resources" 
+```
