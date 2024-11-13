@@ -159,11 +159,13 @@ def main():
     )
     # exit()
     initial_latency = simulate_design(dynamatic_path, kernel_name)
+    print("Initial latency:", initial_latency)
     for buffer_name in tbuffers:
         shell(["cp", "-f", handshake_export, handshake_export_bak])
         remove_buffer(dynamatic_path, kernel_name, buffer_name)
         generate_hw(dynamatic_path, kernel_name)
         current_latency = simulate_design(dynamatic_path, kernel_name)
+        print("Current latency:", current_latency)
         if current_latency > initial_latency:
             print(
                 buffer_name,
@@ -177,7 +179,9 @@ def main():
                 "without a performance penalty",
             )
 
-    print("current latency:", current_latency)
+    generate_hw(dynamatic_path, kernel_name)
+    current_latency = simulate_design(dynamatic_path, kernel_name)
+    print("Final latency:", current_latency)
     synthesize(dynamatic_path, kernel_name)
 
 
