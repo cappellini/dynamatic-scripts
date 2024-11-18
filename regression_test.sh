@@ -4,11 +4,14 @@
 clock_period=4
 
 # Choose the target hdl to test (vhdl|verilog)
-hdl="verilog"
+hdl="vhdl"
+
+# Choose the buffer placement algorithm (on-merges|fpga20|fpl22)
+buffer_alg="on-merges"
 
 dynamatic_dir=./dynamatic
 
-cat filelist_verilog.lst | while read benchmark
+cat filelist.lst | while read benchmark
 do
   [ -f "$benchmark" ] || continue
   echo "[INFO] Launching Dynamatic on benchmark ${benchmark}..."
@@ -16,9 +19,9 @@ do
   echo "set-dynamatic-path $dynamatic_dir; \
     set-src ${benchmark}; \
     set-clock-period ${clock_period}; \
-    compile --simple-buffers; \
+    compile --buffer-algorithm ${buffer_alg}; \
     write-hdl --hdl ${hdl}; \
     simulate; \
     # synthesize; \
-    exit" 2>&1 | $dynamatic_dir/bin/dynamatic --exit-on-failure --debug
-done | tee regression_test_${clock_period}_${hdl}_simple.log
+    exit" | $dynamatic_dir/bin/dynamatic --exit-on-failure --debug
+done 2>&1 | tee regression_test_${clock_period}_${hdl}_simple.log
