@@ -65,7 +65,8 @@ dynamatic/include/dynamatic/Integration.h:214:34: error: no member named 'setfil
   214 |   os << "0x" << std::hex << std::setfill('0') << std::setw(8)
 ```
 
-Change `simulate.sh` as the following: 
+Change `simulate.sh` as the following (note: do not include this change in your
+PR): 
 ```diff
 +++ b/tools/dynamatic/scripts/simulate.sh
 @@ -24,7 +24,7 @@ IO_GEN_BIN="$SIM_DIR/C_SRC/$KERNEL_NAME-io-gen"
@@ -83,7 +84,8 @@ Change `simulate.sh` as the following:
 A pop-up window saying "Your video card drivers seems not to support the
 required Vulkan version...".
 
-Change one line in `$DYNAMATIC_DIR/tools/dynamatic/scripts/visualize.sh`:
+Change one line in `$DYNAMATIC_DIR/tools/dynamatic/scripts/visualize.sh` (note:
+do not include this change in your PR):
 
 ```diff
 # Launch the dataflow visualizer
