@@ -43,18 +43,8 @@ bash "../build_visualizer.sh"
 ## Run your first example 
 
 ```sh
-dynamatic/bin/dynamatic --run run.sh
+bash run.sh
 ```
-
-## Change/add the benchmark
-
-In the file `run.sh`, change the `fir/fir.c` to what you need
-
-```sh 
-set-src ./dynamatic/integration-test/fir/fir.c
-```
-
-In the `./dynamatic/integration-test/`, add your new benchmark
 
 ## Trouble-shooting
 
