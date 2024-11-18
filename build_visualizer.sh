@@ -13,7 +13,7 @@ SCRIPT_CWD="$PWD"
 CMAKE=cmake
 POLYGEIST_DIR_PREFIX="/opt/polygeist"
 GODOT_PATH="/usr/local/bin/Godot_v4.2.1-stable_linux.x86_64"
-GODOT_EXPORT_TEMPLATE_PATH="/usr/local/godot/export_templates"
+GODOT_EXPORT_TEMPLATE_PATH="/usr/local/share/godot/export_templates"
 
 LLVM_PREFIX="$POLYGEIST_DIR_PREFIX/llvm-project"
 
