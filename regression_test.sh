@@ -24,4 +24,4 @@ do
     simulate; \
     # synthesize; \
     exit" | $dynamatic_dir/bin/dynamatic --exit-on-failure --debug
-done 2>&1 | tee regression_test_${clock_period}_${hdl}_simple.log
+done 2>&1 | tee regression_test_${clock_period}_${hdl}_${buffer_alg}.log
