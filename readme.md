@@ -83,7 +83,7 @@ Change `simulate.sh` as the following:
 A pop-up window saying "Your video card drivers seems not to support the
 required Vulkan version...".
 
-Change the one line in `$DYNAMATIC_DIR/tools/dynamatic/scripts/visualize.sh`:
+Change one line in `$DYNAMATIC_DIR/tools/dynamatic/scripts/visualize.sh`:
 
 ```diff
 # Launch the dataflow visualizer
