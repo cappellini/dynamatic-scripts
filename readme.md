@@ -1,4 +1,4 @@
-# Useful Scripts for Working with Dynamatic on the EDA2 Machine
+# Scripts for Working with Dynamatic on the ee-tik-dynamo-eda1 Machine
 
 ## Prerequisite: get your Gurobi license
 
