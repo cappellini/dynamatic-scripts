@@ -32,6 +32,14 @@ cd dynamatic/
 bash ../mybuild.sh
 ``` 
 
+## (Optional) Building the handshake visualizer
+
+```sh
+cd dynamatic/
+git submodule init "visual-dataflow/godot-cpp"
+bash "../build_visualizer.sh"
+``` 
+
 ## Run your first example 
 
 ```sh
@@ -50,7 +58,8 @@ In the `./dynamatic/integration-test/`, add your new benchmark
 
 ## Trouble-shooting
 
-Error when running simulation: 
+### Error when running simulation: 
+
 ```
 dynamatic/include/dynamatic/Integration.h:214:34: error: no member named 'setfill' in namespace 'std'
   214 |   os << "0x" << std::hex << std::setfill('0') << std::setw(8)
@@ -67,4 +76,19 @@ Change `simulate.sh` as the following:
 +CLANGXX_BIN="clang++"
  HLS_VERIFIER_BIN="$DYNAMATIC_DIR/bin/hls-verifier"
  RESOURCE_DIR="$DYNAMATIC_DIR/tools/hls-verifier/resources" 
+```
+
+### Error during visualization:
+
+A pop-up window saying "Your video card drivers seems not to support the
+required Vulkan version...".
+
+Change the one line in `$DYNAMATIC_DIR/tools/dynamatic/scripts/visualize.sh`:
+
+```diff
+# Launch the dataflow visualizer
+echo_info "Launching visualizer..."
+---"$VISUAL_DATAFLOW_BIN" "--dot=$F_DOT_POS" "--csv=$F_CSV" >/dev/null
++++"$VISUAL_DATAFLOW_BIN" "--dot=$F_DOT_POS" "--csv=$F_CSV" --rendering-driver opengl3 >/dev/null
+exit_on_fail "Failed to run visualizer" "Visualizer closed" 
 ```
