@@ -77,17 +77,7 @@ echo "set-dynamatic-path ./dynamatic; \
   compile $SHARING $BUFFER_ALGORITHM; \
   write-hdl --hdl $HDL; \
   simulate; \
-  exit" \
-  | dynamatic/bin/dynamatic --exit-on-failure --debug
-
-exit
-
-echo "set-dynamatic-path ./dynamatic; \
-  set-src ./dynamatic/integration-test/$f_benchmark_src; \
-  set-clock-period 4; \
-  compile --buffer-algorithm $BUFFER_ALGORITHM $SHARING; \
-  write-hdl --hdl $HDL; \
-  simulate; \
+  visualize; \
   exit" \
   | dynamatic/bin/dynamatic --exit-on-failure --debug
 
