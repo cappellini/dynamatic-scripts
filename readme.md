@@ -113,7 +113,7 @@ This will generate the following files:
 provided by Vivado: `$VIVADO/data/verilog/src/glbl.v`. Append `work.glbl` to
 the end of `eval vsim histogram_tb` (the 3rd last line in `simulation.do`)
 
-**Updating `modelsim.ini`**Replace [this
+**Updating modelsim.ini**. Replace [this
 file](https://github.com/EPFL-LAP/dynamatic/blob/main/tools/hls-verifier/resources/modelsim.ini)
 with the generated `/path/to/library/modelsim.ini`
 
