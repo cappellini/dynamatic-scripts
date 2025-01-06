@@ -37,6 +37,7 @@ bash ../mybuild.sh
 ```sh
 cd dynamatic/
 git submodule init "visual-dataflow/godot-cpp"
+git submodule update
 bash "../build_visualizer.sh"
 ``` 
 
